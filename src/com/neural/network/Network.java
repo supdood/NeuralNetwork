@@ -9,7 +9,9 @@ import org.jblas.MatrixFunctions;
 public class Network {
 
     int inputLayers = 2;
+    //must be equal to the amount of examples
     int hiddenLayers = 3;
+    //
     int outputLayers = 1;
 
     //Weights
@@ -24,6 +26,10 @@ public class Network {
     //dJdW
     DoubleMatrix dJdW1;
     DoubleMatrix dJdW2;
+
+    //training variables
+    double learningRate = 0.5;
+    int trainAmount = 100000;
 
     public DoubleMatrix forward(DoubleMatrix X) {
 
@@ -66,6 +72,10 @@ public class Network {
         DoubleMatrix yHat = forward(X);
 
         DoubleMatrix delta3 = y.sub(yHat).neg().mul(sigmoidPrime(this.z3));
+        System.out.print(this.a2.rows + " ");
+        System.out.println(this.a2.columns);
+        System.out.print(delta3.rows + " ");
+        System.out.println(delta3.columns);
         dJdW2 = this.a2.mmul(delta3);
 
         DoubleMatrix delta2 = delta3.mmul(W2.transpose()).mul(sigmoidPrime(this.z2));
@@ -73,7 +83,20 @@ public class Network {
 
     }
 
-    
+    public void backProp() {
+        W2 = W2.sub(dJdW2.mul(learningRate));
+        W1 = W1.sub(dJdW1.mul(learningRate));
+    }
+
+    public void train(DoubleMatrix X, DoubleMatrix y) {
+        for (int i = 0; i < trainAmount; i++) {
+            costFunctionPrime(X, y);
+            backProp();
+        }
+
+    }
+
+
 
 
 
