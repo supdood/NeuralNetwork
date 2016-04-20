@@ -72,11 +72,7 @@ public class Network {
         DoubleMatrix yHat = forward(X);
 
         DoubleMatrix delta3 = y.sub(yHat).neg().mul(sigmoidPrime(this.z3));
-        System.out.print(this.a2.rows + " ");
-        System.out.println(this.a2.columns);
-        System.out.print(delta3.rows + " ");
-        System.out.println(delta3.columns);
-        dJdW2 = this.a2.mmul(delta3);
+        dJdW2 = this.a2.transpose().mmul(delta3);
 
         DoubleMatrix delta2 = delta3.mmul(W2.transpose()).mul(sigmoidPrime(this.z2));
         dJdW1 = X.transpose().mmul(delta2);

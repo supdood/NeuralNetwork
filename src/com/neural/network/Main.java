@@ -13,11 +13,11 @@ public class Main {
         int[] i = {1, 2, 3};
         Network n = new Network();
         DoubleMatrix X = new DoubleMatrix(3, 2, 3, 5, 10, 5, 1, 2);
-        //X = new DoubleMatrix(4, 2, 3, 5, 10, 5, 1, 2, 2, 3);
+        X = new DoubleMatrix(4, 2, 3, 5, 10, 6, 5, 1, 2, 1.5);
         DoubleMatrix normalize = X.columnMaxs();
         X = X.divRowVector(normalize);
         DoubleMatrix y = new DoubleMatrix(3, 1, 75, 82, 93);
-        //y = new DoubleMatrix(4, 1, 75, 82, 93, 69);
+        y = new DoubleMatrix(4, 1, 75, 82, 93, 70);
         y = y.div(100);
 
         DoubleMatrix t = X.mmul(n.W1);
